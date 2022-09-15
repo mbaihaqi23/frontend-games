@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import Sidebar from "../Sidebar";
+import {useCookies} from "react-cookie";
 
 const Navbar = () => {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
-  const toggleSidebar = () => setIsShowSidebar(!isShowSidebar)
+  const toggleSidebar = () => setIsShowSidebar(!isShowSidebar);
+  const [cookies] = useCookies(["accessToken"]);
 
   return (
     <>
@@ -27,24 +29,37 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
-        <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
-          <div className="text-md lg:flex-grow">
-            <Link
-              className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
-              to="/register"
-            >
-              Register
-            </Link>
+        {/* Show profile button when user have logged in */}
+        {
+          cookies.accessToken ?
+            <img
+              src="/person-icon.png"
+              alt="profile icon"
+              className="h-[28px] w-[28px]"
+            />
+            :
+            <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
+              <div className="text-md lg:flex-grow">
+                <Link
+                  className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+                  to="/register"
+                >
+                  Register
+                </Link>
 
-            <Link
-              className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
-              to="/login"
-            >
-              Login
-            </Link>
-          </div>
-        </div>
-        <Sidebar isShowSidebar={isShowSidebar} toggleSidebar={toggleSidebar}/>
+                <Link
+                  className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+                  to="/login"
+                >
+                  Login
+                </Link>
+              </div>
+            </div>
+        }
+        <Sidebar
+          isShowSidebar={isShowSidebar}
+          toggleSidebar={toggleSidebar}
+        />
       </nav>
     </>
   );
