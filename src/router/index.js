@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "../components";
-import { Dashboard, Login, Register } from "../pages";
+import { Dashboard, Login, ProfilePage, Register } from "../pages";
+import DetailGame from "../pages/DetailGame";
 
 const Routing = () => {
   return (
@@ -9,6 +10,8 @@ const Routing = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/detail-page" element={<DetailGame />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>

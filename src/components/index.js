@@ -1,2 +1,5 @@
 import Navbar from "./Navbar";
-export { Navbar };
+import Board from "./Leaderboard"
+
+
+export { Navbar, Board};
