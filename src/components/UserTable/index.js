@@ -23,13 +23,16 @@ const UserTable = () => {
     getUser();
   }, []);
 
-//   useEffect(() => {
-//     const result =  user.filter(country)
-//   }, [search])
+  useEffect(() => {
+    const result =  user.filter(user => {
+        return user.name.toLowerCase().match(search.toLowerCase())
+    })
+    setFilteredUser(result)
+  }, [search])
 
   const columns = [
     {
-        name: "Id",
+        name: "Id User",
         selector: row => row.id,
     },
     {
@@ -41,6 +44,11 @@ const UserTable = () => {
         name: "Email",
         selector: row => row.website_url,
     },
+    {
+      name: "Score",
+      selector: row => row.phone,
+      sortable: true,
+  },
     {
         name: "Action",
         cell: row => <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded focus:outline-none focus:shadow-outline'
@@ -55,7 +63,7 @@ const UserTable = () => {
   return (
     <DataTable 
     columns={columns} 
-    data={user} 
+    data={filteredUser} 
     pagination
     fixedHeader
     fixedHeaderScrollHeight='450px'
@@ -66,10 +74,10 @@ const UserTable = () => {
     subHeaderComponent={
         <input
         className="shadow appearance-none border rounded w-30 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        name="text"
         type="text"
         placeholder="Search Here"
-        // onChange={() => setSearch(e.target.value)}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
       />
     } 
     />

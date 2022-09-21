@@ -1,6 +1,6 @@
 import React from 'react'
-import Board from '../../components/Leaderboard'
-import '../../components/Leaderboard/style.css'
+import "../../components/Leaderboard/style.css"
+import Leaderboard from '../../components/Leaderboard'
 
 
 
@@ -32,13 +32,12 @@ const DetailGame = () => {
           </div>
           </div>
           </div>
-            
-            <div className='App' id='main'>
-              <Board></Board>
-            </div>
-            
+          <div className='App block text-gray-800 text-sm font-bold mb-2' id='main'>
+                   <Leaderboard></Leaderboard>
+                </div>
           </div>
        </div>
+
     </div>
   )
 }

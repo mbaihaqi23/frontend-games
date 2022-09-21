@@ -31,7 +31,7 @@ const Login = () => {
         console.log(err);
         alert(err.response.data.message || err.response.data.errors[0].msg);
       });
-  };
+  }; 
   return (
     <div className="min-h-screen bg-gray-300">
       <div className="flex h-screen justify-center items-center">

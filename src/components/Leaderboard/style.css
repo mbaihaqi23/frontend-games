@@ -12,9 +12,9 @@
 
 #main{
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+        justify-content: right;
+        align-items: right;
+        height: 90vh;
 }
 
 .board {

@@ -1,52 +1,74 @@
-import React, { useState }  from 'react'
-import Profile from '../Profile'
-import { Leaderboard } from '../Database'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
+export default function Leaderboard() {
+  const [users, setUsers] = useState([])  
 
-function Board() {
+  const getUsers = async () => {
+    try {
+        const response = await axios.get('https://api.openbrewerydb.org/breweries')
+        setUsers(response.data)
+          
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
- const [period, setPeriod] = useState(0); 
- 
- const handleClick = (e) => {
-    setPeriod(e.target.dataset.id)
- }
+  useEffect(() => {
+    getUsers();
+  }, []);
+  
+    return ( 
+        <div className="flex flex-col">
+        <div className="overflow-x-auto">
+            <div className="p-1.5 w-full inline-block align-middle">
+                <div className="overflow-hidden border rounded-lg">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                                >
+                                    ID
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                                >
+                                    Name
+                                </th>
+                                <th 
+                                    scope="col"
+                                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                                >
+                                    Score
+                                </th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
 
-  return (
-    <div className='board'>
-        <h1 className='leaderboard'>Leaderboard</h1>
+                           {users.map((data, index) => (
 
-        <div className='duration'>
-            <button onClick={handleClick} data-id='7'>7 days</button>
-            <button onClick={handleClick} data-id='30'>30 day</button>
-            <button onClick={handleClick} data-id='0'>All-times</button>
+                            <tr key={index}>
+                                <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                                    {index + 1}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-left text-gray-800 whitespace-nowrap">
+                                    {data.name}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-left text-gray-800 whitespace-nowrap">
+                                    {data.phone}
+                                </td>
+                            </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        
-     <Profile Leaderboard={between(Leaderboard, period)}></Profile>
+    </div>
+    )
+  }
 
-    </div>  
-  )
-}
-
-function between(data, between){
-  const today = new Date();
-  const previous = new Date(today);
-  previous.setDate(previous.getDate() - (between + 1));
-
-  let filter = data.filter(val => {
-      let userDate = new Date(val.dt);
-      if (between == 0) return val;
-      return previous <= userDate && today >= userDate;
-  })
-
-  // sort with asending order
-  return filter.sort((a, b) => {
-      if ( a.score === b.score){
-          return b.score - a.score;
-      } else{
-          return b.score - a.score;
-      }
-  })
-
-}
-
-export default Board
