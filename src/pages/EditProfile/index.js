@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const EditProfile = () => {
   const [values, setValues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [cookies, setCookies] = useCookies(["accessToken", "userId"]);
@@ -24,7 +24,7 @@ const Login = () => {
           setCookies("accessToken", accessToken, { maxAge: 60000 });
           const userId = jwtDecode(accessToken);
           setCookies("userId", userId);
-          navigate("/posts", { replace: true });
+          navigate("/profile", { replace: true });
         }
       })
       .catch((err) => {
@@ -36,6 +36,18 @@ const Login = () => {
     <div className="min-h-screen bg-gray-300">
       <div className="flex h-screen justify-center items-center">
         <div className="w-80 rounded-lg overflow-hidden shadow-2xl m-4 bg-gray-100">
+        <div className="px-6 py-4">
+            <label className="block text-gray-800 text-sm font-bold mb-2">
+              Full Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="fullname"
+              type="text"
+              placeholder="Full Name"
+              onChange={handleChange}
+            />
+          </div>
           <div className="px-6 py-4">
             <label className="block text-gray-800 text-sm font-bold mb-2">
               Email
@@ -100,7 +112,7 @@ const Login = () => {
               type="submit"
               onClick={handleSubmit}
             >
-              Login
+              Update
             </button>
           </div>
         </div>
@@ -109,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default EditProfile;
