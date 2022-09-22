@@ -1,12 +1,21 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar";
-import {useCookies} from "react-cookie";
+import { useCookies } from "react-cookie";
 
 const Navbar = () => {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
   const toggleSidebar = () => setIsShowSidebar(!isShowSidebar);
-  const [cookies] = useCookies(["accessToken"]);
+  const [cookies, removeCookie] = useCookies(["accessToken"]);
+
+  const handleLogout = () => {
+    removeCookie("accessToken");
+    removeCookie("userId");
+  };
+
+  useEffect(() => {
+    removeCookie("accessToken");
+  }, [removeCookie]);
 
   return (
     <>
@@ -30,36 +39,43 @@ const Navbar = () => {
           </button>
         </div>
         {/* Show profile button when user have logged in */}
-        {
-          cookies.accessToken ?
-            <img
-              src="/person-icon.png"
-              alt="profile icon"
-              className="h-[28px] w-[28px]"
-            />
-            :
-            <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
-              <div className="text-md lg:flex-grow">
-                <Link
-                  className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
-                  to="/register"
-                >
-                  Register
-                </Link>
-
-                <Link
-                  className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
-                  to="/login"
-                >
-                  Login
-                </Link>
-              </div>
+        {cookies.accessToken !== "undefined" ? (
+          <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
+            <div className="text-md lg:flex-grow flex items-center">
+              <img
+                src="/person-icon.png"
+                alt="profile icon"
+                className="h-[28px] w-[28px] block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+              />
+              <Link
+                className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+                to="/login"
+                onClick={handleLogout}
+              >
+                Sign Out
+              </Link>
             </div>
-        }
-        <Sidebar
-          isShowSidebar={isShowSidebar}
-          toggleSidebar={toggleSidebar}
-        />
+          </div>
+        ) : (
+          <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
+            <div className="text-md lg:flex-grow flex items-center">
+              <Link
+                className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+                to="/register"
+              >
+                Register
+              </Link>
+
+              <Link
+                className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+                to="/login"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+        )}
+        <Sidebar isShowSidebar={isShowSidebar} toggleSidebar={toggleSidebar} />
       </nav>
     </>
   );
