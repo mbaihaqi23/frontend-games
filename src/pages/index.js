@@ -1,6 +1,6 @@
-import Dashboard from "./Dashboard";
+import Home from "./Home";
 import Register from "./Register";
 import Login from "./Login";
 import ProfilePage from "./ProfilePage";
 
-export { Dashboard, Register, Login, ProfilePage };
+export { Home, Register, Login, ProfilePage };
