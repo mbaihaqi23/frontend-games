@@ -1,25 +1,17 @@
-
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import _axios from '../../helper/axios'
 
 export default function Leaderboard() {
   const [users, setUsers] = useState([])  
 
   const getUsers =  () => {
-   
-       _axios.get('/leaderboard')
-        .then((res) => {
-            console.log(res.data)
-            if (res.data) {
-              setUsers(res.data)            
-            }
-          })
-          .catch((err) => {
-           console.log(err)
-          });
-        
+    try {
+.get('localhost:8000/leaderboard')
+        setUsers(response.data)
           
-   
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   useEffect(() => {
