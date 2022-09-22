@@ -1,17 +1,25 @@
-import axios from 'axios'
+
 import React, { useEffect, useState } from 'react'
+import _axios from '../../helper/axios'
 
 export default function Leaderboard() {
   const [users, setUsers] = useState([])  
 
-  const getUsers = async () => {
-    try {
-        const response = await axios.get('https://api.openbrewerydb.org/breweries')
-        setUsers(response.data)
+  const getUsers =  () => {
+   
+       _axios.get('/leaderboard')
+        .then((res) => {
+            console.log(res.data)
+            if (res.data) {
+              setUsers(res.data)            
+            }
+          })
+          .catch((err) => {
+           console.log(err)
+          });
+        
           
-    } catch (error) {
-        console.log(error)
-    }
+   
   }
 
   useEffect(() => {
@@ -56,10 +64,10 @@ export default function Leaderboard() {
                                     {index + 1}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-left text-gray-800 whitespace-nowrap">
-                                    {data.name}
+                                    {data.fullname}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-left text-gray-800 whitespace-nowrap">
-                                    {data.phone}
+                                    {data.totalPoint}
                                 </td>
                             </tr>
                             ))}
