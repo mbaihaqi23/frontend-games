@@ -1,39 +1,28 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import _axios from "../../helper/axios";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 const Registration = () => {
   const [values, setValues] = useState({});
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const MySwal = withReactContent(Swal);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    _axios
-      .post("/user/register", values)
+    axios
+      .post("", values)
       .then((res) => {
-        if (res.data) {
-          MySwal.fire({
-            title: "Success",
-            text: "User successfully created!",
-            icon: "success",
-            footer: "You will redirected to login page",
-            confirmButtonColor: "#3B82F6",
-          });
-          navigate("/login");
-        }
+        alert("Register Success!");
+        navigate("/login", { replace: true });
       })
       .catch((err) => {
-        MySwal.fire({
-          title: <p>{err.data.errors[0].msg}</p>,
-          icon: "error",
-        });
+        console.log(err.response);
+        if ((err.response.status = 400)) {
+          alert(err.response.data.errors[0].msg);
+        } else alert("Internal Server Error!");
       });
   };
   return (
@@ -46,7 +35,7 @@ const Registration = () => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="fullname"
+              name="fullName"
               type="text"
               placeholder="Full Name"
               onChange={handleChange}
