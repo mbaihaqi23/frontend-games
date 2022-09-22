@@ -1,7 +1,5 @@
-import Home from "./Home";
+import Dashboard from "./Dashboard";
 import Register from "./Register";
 import Login from "./Login";
-import ProfilePage from "./ProfilePage";
-import DetailGame from "./DetailGame"
 
-export { Home, Register, Login, ProfilePage, DetailGame};
+export { Dashboard, Register, Login };
