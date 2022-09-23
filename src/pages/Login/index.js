@@ -1,13 +1,16 @@
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import _axios from "../../helper/axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const Login = () => {
   const [values, setValues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [cookies, setCookies] = useCookies(["accessToken", "userId"]);
+  const MySwal = withReactContent(Swal);
 
   const navigate = useNavigate();
 
@@ -16,20 +19,23 @@ const Login = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("", values)
+    _axios
+      .post("/auth/login", values)
       .then((res) => {
         const { accessToken } = res.data;
         if (accessToken) {
           setCookies("accessToken", accessToken, { maxAge: 60000 });
           const userId = jwtDecode(accessToken);
           setCookies("userId", userId);
-          navigate("/posts", { replace: true });
+          navigate("/detail-page", { replace: true });
         }
       })
       .catch((err) => {
         console.log(err);
-        alert(err.response.data.message || err.response.data.errors[0].msg);
+        MySwal.fire({
+          title: <p>{err.data.errors[0].msg}</p>,
+          icon: "error",
+        });
       });
   };
   return (
