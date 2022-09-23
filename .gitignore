@@ -8,6 +8,9 @@ yarn-lock.json
 /.pnp
 .pnp.js
 
+# webstorm
+/.idea
+
 # testing
 /coverage
 
