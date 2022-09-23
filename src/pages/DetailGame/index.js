@@ -1,6 +1,6 @@
 import React from 'react'
 // import "../../components/Leaderboard/style.css"
-import Leaderboard from '../../components/Leaderboard'
+import { Leaderboard } from "../../components";
 
 const DetailGame = () => { 
   return (

@@ -19,15 +19,12 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed flex items-center justify-between flex-wrap bg-white p-6 w-full">
+      <nav className="flex items-center justify-between flex-wrap bg-white p-6">
         <div className="flex items-center text-gray-800 mr-6 text-lg font-bold">
           <Link to="/">Logo</Link>
         </div>
-        <div className="flex lg:hidden">
-          <button
-            onClick={toggleSidebar}
-            className="flex items-center px-3 py-2 border rounded text-gray-800 border-gray-800 dark:border-gray-200"
-          >
+        <div className="block lg:hidden">
+          <button className="flex items-center px-3 py-2 border rounded text-gray-800 border-gray-800 dark:border-gray-200">
             <svg
               className="fill-current h-3 w-3"
               viewBox="0 0 20 20"
