@@ -2,23 +2,20 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 export default function Leaderboard() {
-  const [users, setUsers] = useState([])  
+  const [users, setUsers] = useState([])
 
   const getUsers =  () => {
-    try {
-.get('localhost:8000/leaderboard')
-        setUsers(response.data)
-          
-    } catch (error) {
-        console.log(error)
-    }
+    axios
+      .get('http://localhost:8000/leaderboard')
+      .then((response) => setUsers(response.data))
+      .catch((e) => alert(e))
   }
 
   useEffect(() => {
     getUsers();
   }, []);
-  
-    return ( 
+
+    return (
         <div className="flex flex-col">
         <div className="overflow-x-auto">
             <div className="p-1.5 w-full inline-block align-middle">
@@ -38,13 +35,13 @@ export default function Leaderboard() {
                                 >
                                     Name
                                 </th>
-                                <th 
+                                <th
                                     scope="col"
                                     className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
                                 >
                                     Score
                                 </th>
-                               
+
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
