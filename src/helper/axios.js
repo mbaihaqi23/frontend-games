@@ -16,8 +16,8 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function (config) {
+    // config.headers['Authorization'] = 'Bearer' + config.headers['Authorization']
     // Do something before request is sent
-    // config.headers['Authorization'] = 'Bearer' + store.getters.token
     return config;
   },
   function (error) {
@@ -34,6 +34,7 @@ _axios.interceptors.response.use(
     return response;
   },
   function (error) {
+    console.log(error);
     // Do something with response error
     if (error.response.status === 401 || error.response.status === 400)
       // console.log("interceptor")
