@@ -26,18 +26,19 @@ const Home = () => {
                 game you want to play then you'll instantly be able to play it.
               </p>
               <div className="flex gap-x-2 mt-4 justify-center md:justify-start">
-                {authToken && (
+                {authToken !== "undefined" ? (
                   <Link to="/detail-page">
                     <div className="bg-blue-500 hover:bg-blue-700 py-2 w-40 text-white font-semibold text-lg text-center rounded-lg">
                       Play Now
                     </div>
                   </Link>
+                ) : (
+                  <Link to="/login">
+                    <div className="bg-blue-500 hover:bg-blue-700 py-2 w-40 text-white font-semibold text-lg text-center rounded-lg">
+                      Play Now
+                    </div>
+                  </Link>
                 )}
-                <Link to="/login">
-                  <div className="bg-blue-500 hover:bg-blue-700 py-2 w-40 text-white font-semibold text-lg text-center rounded-lg">
-                    Play Now
-                  </div>
-                </Link>
               </div>
             </div>
           </div>

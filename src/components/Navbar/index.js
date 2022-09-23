@@ -6,16 +6,16 @@ import { useCookies } from "react-cookie";
 const Navbar = () => {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
   const toggleSidebar = () => setIsShowSidebar(!isShowSidebar);
-  const [cookies, removeCookie] = useCookies(["accessToken"]);
+  const [cookies, removeCookie] = useCookies(["accessToken", "userId"]);
 
   const handleLogout = () => {
     removeCookie("accessToken");
     removeCookie("userId");
   };
 
-  useEffect(() => {
-    removeCookie("accessToken");
-  }, [removeCookie]);
+  // useEffect(() => {
+  //   removeCookie("accessToken");
+  // }, [removeCookie]);
 
   return (
     <>
@@ -42,7 +42,7 @@ const Navbar = () => {
               <img
                 src="/person-icon.png"
                 alt="profile icon"
-                className="h-[28px] w-[28px] block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
+                className="h-8 w-8 block lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
               />
               <Link
                 className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import _axios from "../../helper/axios";
 
 export default function Leaderboard() {
   const [users, setUsers] = useState([]);
   const [cookies] = useCookies(["accessToken"]);
   const authToken = cookies.accessToken;
+  const navigate = useNavigate();
   const getUsers = () => {
     _axios
       .get("/leaderboard", {
@@ -17,6 +19,7 @@ export default function Leaderboard() {
         setUsers(res.data);
       })
       .catch((err) => {
+        navigate("/");
         console.log("err: " + err);
       });
   };
