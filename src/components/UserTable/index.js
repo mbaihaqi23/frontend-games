@@ -32,32 +32,36 @@ const UserTable = () => {
 
   const columns = [
     {
-        name: "Id User",
-        selector: row => row.id,
+      name: "Id User",
+      selector: (row) => row.id,
     },
     {
-        name: "Name",
-        selector: row => row.name,
-        sortable: true,
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
     },
     {
-        name: "Email",
-        selector: row => row.website_url,
+      name: "Email",
+      selector: (row) => row.website_url,
     },
     {
       name: "Score",
-      selector: row => row.phone,
+      selector: (row) => row.phone,
       sortable: true,
-  },
+    },
     {
-        name: "Action",
-        cell: row => <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                         type='submit' 
-                         onClick={()=>alert(row.id)}
-                        >Edit
-                     </button>
-    }
-  ]
+      name: "Action",
+      cell: (row) => (
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          onClick={() => alert(row.id)}
+        >
+          Edit
+        </button>
+      ),
+    },
+  ];
 
 
   return (

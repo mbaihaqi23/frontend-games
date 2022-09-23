@@ -1,5 +1,5 @@
+import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
+import UserTable from "./UserTable";
 
-
-
-export { Navbar };
+export { Leaderboard, Navbar, UserTable };
