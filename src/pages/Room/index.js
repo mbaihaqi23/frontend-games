@@ -1,4 +1,6 @@
 import {RoomCard} from "../../components";
+import Swal from "sweetalert2";
+import {useEffect} from "react";
 
 export default function Room() {
   const rooms = [
@@ -65,16 +67,54 @@ export default function Room() {
     },
   ];
 
+
+  const handleCreate = async () => {
+    const { value: roomName } = await Swal.fire({
+      title: "How Should We Call Your Room?",
+      confirmButtonColor: "#3b82f6",
+      input: "text",
+      inputLabel: "Your Room Name",
+      inputValue: "",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write something!";
+        }
+      },
+    });
+    // TODO: Handle
+    console.log(roomName);
+  };
+
+  const handleJoin = async () => {
+    const { value: roomName } = await Swal.fire({
+      title: "What is the Room Code?",
+      confirmButtonColor: "#3b82f6",
+      input: "text",
+      inputValue: "",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write something!";
+        }
+      },
+    });
+    // TODO: Handle
+    console.log(roomName);
+  };
+
   return (
     <div className="lg:container mx-auto px-8">
       <div className="mt-4">
         <button
           className="py-2 w-[144px] rounded-lg mr-4 transition-colors bg-blue-500 text-white hover:bg-blue-700"
+          onClick={handleJoin}
         >
           Join Game
         </button>
         <button
           className="py-2 w-[144px] rounded-lg transition-colors border border-blue-500 text-blue-500 hover:bg-gray-200"
+          onClick={handleCreate}
         >
           Create Room
         </button>
