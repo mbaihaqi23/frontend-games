@@ -39,6 +39,8 @@ _axios.interceptors.response.use(
     if (error.response.status === 401 || error.response.status === 400)
       // console.log("interceptor")
       return Promise.reject(error.response);
+    else
+      return Promise.reject(error)
   }
 );
 
