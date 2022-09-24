@@ -9,7 +9,7 @@ import withReactContent from "sweetalert2-react-content";
 const Login = () => {
   const [values, setValues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [setCookies] = useCookies(["accessToken", "userId"]);
+  const [_, setCookies] = useCookies(["accessToken", "userId"]);
   const MySwal = withReactContent(Swal);
 
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Login = () => {
       .catch((err) => {
         console.log(err);
         MySwal.fire({
-          title: <p>{err.data.errors[0].msg}</p>,
+          title: <p>{err.message}</p>,
           icon: "error",
         });
       });
