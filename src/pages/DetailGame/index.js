@@ -1,6 +1,7 @@
 import React from 'react'
 // import "../../components/Leaderboard/style.css"
 import { Leaderboard } from "../../components";
+import {Link} from "react-router-dom";
 
 const DetailGame = () => { 
   return (
@@ -14,12 +15,12 @@ const DetailGame = () => {
               </h1>
             </div>
             <div className="px-6 py-4">
-              <button
+              <Link
                 className="bg-blue-500 hover:bg-blue-700 text-sm text-white font-bold py-2 mb-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
-              >
+               to="/room">
                 <span>PLAYER VS PLAYER</span>
-              </button>
+              </Link>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-sm text-white font-bold py-2 mb-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
