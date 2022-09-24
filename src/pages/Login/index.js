@@ -9,7 +9,7 @@ import withReactContent from "sweetalert2-react-content";
 const Login = () => {
   const [values, setValues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [_, setCookies] = useCookies(["accessToken", "userId"]);
+  const [cookies, setCookies] = useCookies(["accessToken", "userId"]);
   const MySwal = withReactContent(Swal);
 
   const navigate = useNavigate();
