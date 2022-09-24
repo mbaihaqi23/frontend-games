@@ -1,6 +1,8 @@
 import {RoomCard} from "../../components";
 import Swal from "sweetalert2";
 import {useEffect} from "react";
+import {useCookies} from "react-cookie";
+import {useNavigate} from "react-router-dom";
 
 export default function Room() {
   const rooms = [
@@ -67,6 +69,28 @@ export default function Room() {
     },
   ];
 
+  const navigate = useNavigate();
+  const [cookies] = useCookies(["accessToken"]);
+  const authToken = cookies.accessToken;
+
+  const checkLogin = async () => {
+    if (authToken === "undefined") {
+      await Swal.fire(
+        {
+          title: "You Need To Login First",
+          confirmButtonColor: "#3b82f6",
+          icon: "error",
+        },
+      );
+      navigate("/");
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await checkLogin(); // TODO
+    })();
+  }, []);
 
   const handleCreate = async () => {
     const { value: roomName } = await Swal.fire({
