@@ -1,7 +1,16 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "../components";
-import { Home, Login, ProfilePage, Register, DetailGame } from "../pages";
+import {
+  Home,
+  Login,
+  ProfilePage,
+  Register,
+  DetailGame,
+  Room,
+  PlayGame,
+  RpsGame,
+} from "../pages";
 
 const Routing = () => {
   return (
@@ -13,6 +22,9 @@ const Routing = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/room" element={<Room />} />
+        <Route path="/room/:roomId" element={<RpsGame />} />
+        <Route path="/playgame" element={<PlayGame />} />
       </Routes>
     </div>
   );

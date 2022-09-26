@@ -1,15 +1,16 @@
 import jwtDecode from "jwt-decode";
-import React, { useState } from "react";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {useCookies} from "react-cookie";
+import {useNavigate} from "react-router-dom";
 import _axios from "../../helper/axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import {data} from "autoprefixer";
 
 const Login = () => {
   const [values, setValues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [setCookies] = useCookies(["accessToken", "userId"]);
+  const [cookies, setCookies] = useCookies(["accessToken", "userId"]);
   const MySwal = withReactContent(Swal);
 
   const navigate = useNavigate();
@@ -31,9 +32,8 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         MySwal.fire({
-          title: <p>{err.data.errors[0].msg}</p>,
+          title: <p>{err.data.message || err.data.msg}</p>,
           icon: "error",
         });
       });
