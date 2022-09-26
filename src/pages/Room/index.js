@@ -192,21 +192,23 @@ export default function Room() {
             if (!room.guestUserId) {
               return <RoomCard.Waiting
                 room={rooms[i]}
-                onClick={() => handleClick(rooms[i].id)}
+                // onClick={() => handleClick(rooms[i].id)}
                 key={rooms[i].id}
               />;
             } else if (room.isFinished === true) {
               return <RoomCard.Finished
                 room={rooms[i]}
-                onClick={() => handleClick(rooms[i].id)}
+                // onClick={() => handleClick(rooms[i].id)}
                 key={rooms[i].id}
               />;
             }
-            return <RoomCard.OnGoing
-              room={rooms[i]}
-              onClick={() => handleClick(rooms[i].id)}
-              key={rooms[i].id}
-            />;
+            return (
+              <RoomCard.OnGoing
+                room={rooms[i]}
+                // onClick={() => handleClick(rooms[i].id)}
+                key={rooms[i].id}
+              />
+            );
           })
         }
 

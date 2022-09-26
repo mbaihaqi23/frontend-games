@@ -5,5 +5,15 @@ import ProfilePage from "./ProfilePage";
 import DetailGame from "./DetailGame";
 import PlayGame from "./PlayGame";
 import Room from "./Room";
+import RpsGame from "./RpsGame";
 
-export { Home, Register, Login, ProfilePage, DetailGame, Room, PlayGame };
+export {
+  Home,
+  Register,
+  Login,
+  ProfilePage,
+  DetailGame,
+  Room,
+  PlayGame,
+  RpsGame,
+};
