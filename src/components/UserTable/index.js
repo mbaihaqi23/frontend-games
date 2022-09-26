@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -9,27 +9,38 @@ import _axios from "../../helper/axios";
 export default function UserTable() {
   const [values, setValues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [cookies, setCookies] = useCookies(["accessToken", "userId"]);
+  const [cookies] = useCookies(["accessToken", "userId"]);
   const MySwal = withReactContent(Swal);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    _axios
+      .get("/user",   {
+        headers: {
+          Authorization: `Bearer ${cookies.accessToken}`,
+        },
+      })
+      .then((res) => setValues(res.data))
+      .catch((err) => console.error(err));
+  }, [])
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     _axios
-      .post("/auth/login", values)
+      .put("/user", values, {
+      headers: {
+        Authorization: `Bearer ${cookies.accessToken}`,
+      },
+    })
       .then((res) => {
-        const { accessToken } = res.data;
-        if (accessToken) {
-          setCookies("accessToken", accessToken, { maxAge: 60000 });
-          const userId = jwtDecode(accessToken);
-          setCookies("userId", userId);
-          navigate("/", { replace: true });
-        }
-      })
+      alert("Edit succesfully!");
+      navigate("/user");
+    })
       .catch((err) => {
         MySwal.fire({
           title: <p>{err.data.message || err.data.msg}</p>,
@@ -51,6 +62,7 @@ export default function UserTable() {
               name="fullname"
               type="text"
               placeholder="Full Name"
+              value={values.fullname}
               onChange={handleChange}
             />
           </div>
@@ -63,6 +75,7 @@ export default function UserTable() {
               name="email"
               type="email"
               placeholder="Email"
+              value={values.email}
               onChange={handleChange}
             />
           </div>
