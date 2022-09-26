@@ -9,6 +9,7 @@ import {
   DetailGame,
   Room,
   PlayGame,
+  RpsGame,
 } from "../pages";
 
 const Routing = () => {
@@ -22,6 +23,7 @@ const Routing = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/room" element={<Room />} />
+        <Route path="/room/:roomId" element={<RpsGame />} />
         <Route path="/playgame" element={<PlayGame />} />
       </Routes>
     </div>

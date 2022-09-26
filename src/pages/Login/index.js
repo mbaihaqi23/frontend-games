@@ -31,9 +31,8 @@ const Login = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         MySwal.fire({
-          title: <p>{err.message}</p>,
+          title: <p>{err.data.message || err.data.msg}</p>,
           icon: "error",
         });
       });
