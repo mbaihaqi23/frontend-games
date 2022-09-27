@@ -21,7 +21,7 @@ export default function Leaderboard() {
       navigate("/");
     } else
       _axios
-        .get("/leaderboard", {
+        .get("/leaderboard",   {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
