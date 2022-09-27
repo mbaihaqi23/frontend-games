@@ -147,60 +147,90 @@ export default function Room() {
       inputValidator: (value) => {
         if (!value) {
           return "You need to write something!";
+        } else {
+          _axios
+            .get(`/room/join/${roomCode}`, {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            })
+            .then((res) => {
+              const _roomId = res.data.roomId;
+              navigate(`/room/${_roomId}`);
+            })
+            .catch((e) => {
+              alert(e);
+            });
         }
       },
     });
+  };
 
-    _axios
-      .get(`/room/join/${roomCode}`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+  const handleClick = async (e, room) => {
+    await Swal.fire({
+      title: "Are you sure to join this room?",
+      confirmButtonColor: "#3b82f6",
+      showCancelButton: true,
+      confirmButtonText: "Yes, I am sure!",
+      cancelButtonText: "No, cancel it!",
+      closeOnConfirm: true,
+      closeOnCancel: true,
+    })
+      .then(function () {
+        _axios
+          .get(`/room/join/${room.roomCode}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .then((res) => {
+            const _roomId = res.data.roomId;
+            navigate(`/room/${_roomId}`, { state: room });
+          })
+          .catch((e) => {
+            alert(e);
+          });
       })
-      .then((res) => {
-        const _roomId = res.data.roomId;
-        navigate(`/room/${_roomId}`)
-      })
-      .catch((e) => {
-        alert(e);
+      .catch(function () {
+        e.preventDefault();
       });
   };
 
-  const handleClick = (id) => {
-    navigate(`/room/${id}`)
-  }
-
   return (
-    <div className="lg:container mx-auto px-8">
-      <div className="mt-4">
-        <button
-          className="py-2 w-[144px] rounded-lg mr-4 transition-colors bg-blue-500 text-white hover:bg-blue-700"
-          onClick={handleJoin}
-        >
-          Join Game
-        </button>
-        <button
-          className="py-2 w-[144px] rounded-lg transition-colors border border-blue-500 text-blue-500 hover:bg-gray-200"
-          onClick={handleCreate}
-        >
-          Create Room
-        </button>
-      </div>
-      <div className="mt-8 flex flex-wrap gap-8">
-        {
-          rooms.map(function (room, i) {
+    <div className="min-h-screen bg-gray-100">
+      <div className="lg:container mx-auto px-8 ">
+        <div className="mt-4">
+          <button
+            className="py-2 w-[144px] rounded-lg mr-4 transition-colors bg-blue-500 text-white hover:bg-blue-700"
+            onClick={handleJoin}
+          >
+            Join Game
+          </button>
+          <button
+            className="py-2 w-[144px] rounded-lg transition-colors border border-blue-500 text-blue-500 hover:bg-gray-200"
+            onClick={handleCreate}
+          >
+            Create Room
+          </button>
+        </div>
+        <div className="mt-8 flex flex-wrap gap-8">
+          {rooms.map(function (room, i) {
             if (!room.guestUserId) {
-              return <RoomCard.Waiting
-                room={rooms[i]}
-                // onClick={() => handleClick(rooms[i].id)}
-                key={rooms[i].id}
-              />;
+              return (
+                <RoomCard.Waiting
+                  room={rooms[i]}
+                  onClick={(e) => handleClick(e, rooms[i])}
+                  key={rooms[i].id}
+                />
+              );
             } else if (room.isFinished === true) {
-              return <RoomCard.Finished
-                room={rooms[i]}
-                // onClick={() => handleClick(rooms[i].id)}
-                key={rooms[i].id}
-              />;
+              return (
+                <RoomCard.Finished
+                  room={rooms[i]}
+                  // onClick={() => handleClick(rooms[i].id)}
+                  key={rooms[i].id}
+                />
+              );
             }
             return (
               <RoomCard.OnGoing
@@ -209,9 +239,8 @@ export default function Room() {
                 key={rooms[i].id}
               />
             );
-          })
-        }
-
+          })}
+        </div>
       </div>
     </div>
   );
