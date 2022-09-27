@@ -39,7 +39,7 @@ export default function UserTable() {
     })
       .then((res) => {
       alert("Edit succesfully!");
-      navigate("/user");
+      navigate("/profile");
     })
       .catch((err) => {
         MySwal.fire({
