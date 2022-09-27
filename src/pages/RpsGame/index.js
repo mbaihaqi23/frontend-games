@@ -13,6 +13,7 @@ const RpsGame = () => {
   const [cookies] = useCookies(["accessToken", "userId"]);
   const [hostSelectionValue, setHostSelectionValue] = useState(0);
   const [guestSelectionValue, setGuestSelectionValue] = useState(0);
+  const [guestId, setGuestId] = useState("");
   const [roomStatus, setRoomStatus] = useState(isFinished);
   const [winner, setWinner] = useState("");
   const authToken = cookies.accessToken;
@@ -21,25 +22,13 @@ const RpsGame = () => {
   let selection;
 
   useEffect(() => {
-    // if (elementRef.value) {
-    // checkRoomStatus();
-    // console.log(roomStatus);
-    // calculate();
-    // } else {
-    // setRoomStatus(isFinished);
-    // }
-    // if (
-    //   elementRef.value === "rock" ||
-    //   elementRef.value === "paper" ||
-    //   elementRef.value === "scissor"
-    // ) {
-    //   elementRef.current.addEventListener("click", play, { once: true });
-    //   console.log(elementRef);
-    //   calculate();
-    // }
     calculate();
     getTheWinner();
   }, [hostSelectionValue, guestSelectionValue]);
+
+  useEffect(() => {
+    getGuest();
+  }, []);
 
   const play = (e) => {
     const selectionClass = e.target.name;
@@ -53,8 +42,7 @@ const RpsGame = () => {
           setHostSelectionValue(3);
         }
       }
-      if (authToken !== "undefined" && authUser.id === guestUserId) {
-        console.log("sini");
+      if (authToken !== "undefined" && authUser.id === guestId) {
         if (selectionClass == "rock") {
           setGuestSelectionValue(1);
         } else if (selectionClass == "paper") {
@@ -64,6 +52,21 @@ const RpsGame = () => {
         }
       }
     }
+  };
+
+  const getGuest = () => {
+    _axios
+      .get(`room/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((res) => {
+        setGuestId(res.data.guestUserId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const calculate = () => {
@@ -115,21 +118,6 @@ const RpsGame = () => {
       });
   };
 
-  // const isMyTurn = turn % 2 === 0 ? true : false;
-
-  // // assume that host already pick option and turn modulo 2 is 1 (next player)
-  // if (isMyTurn) {
-  //   return (
-  //     <div className="min-h-screen">
-  //       <div className="h-screen flex flex-col items-center justify-center">
-  //         <LoadingSpinner />
-  //         <h1 className="text-gray-800 items-center mt-2">
-  //           Waiting for other player to choose their option
-  //         </h1>
-  //       </div>
-  //     </div>
-  //   );
-  // }
   if (roomStatus === true && turn === 3) {
     return (
       <div className="min-h-screen bg-gray-100">
@@ -144,7 +132,7 @@ const RpsGame = () => {
   } else {
     if (
       (hostUserId === authUser.id && hostSelectionValue !== 0) ||
-      (guestUserId === authUser.id && guestSelectionValue !== 0)
+      (guestId === authUser.id && guestSelectionValue !== 0)
     ) {
       return (
         <div className="min-h-screen bg-gray-100">

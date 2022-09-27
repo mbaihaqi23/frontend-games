@@ -72,7 +72,7 @@ export default function Room() {
 
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
-  const [cookies] = useCookies(["accessToken"]);
+  const [cookies] = useCookies(["accessToken", "userId"]);
   const authToken = cookies.accessToken;
 
   const fetchRooms = () => {
@@ -91,13 +91,11 @@ export default function Room() {
 
   const checkLogin = async () => {
     if (authToken === "undefined") {
-      await Swal.fire(
-        {
-          title: "You Need To Login First",
-          confirmButtonColor: "#3b82f6",
-          icon: "error",
-        },
-      );
+      await Swal.fire({
+        title: "You Need To Login First",
+        confirmButtonColor: "#3b82f6",
+        icon: "error",
+      });
       navigate("/");
     } else {
       await fetchRooms();
@@ -126,11 +124,15 @@ export default function Room() {
     });
 
     _axios
-      .post("/room/create", { roomName }, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
+      .post(
+        "/room/create",
+        { roomName },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
       .then(() => {
         fetchRooms();
       })
@@ -155,8 +157,12 @@ export default function Room() {
               },
             })
             .then((res) => {
-              const _roomId = res.data.roomId;
-              navigate(`/room/${_roomId}`);
+              // const _roomId = res.data.roomId;
+              // navigate(`/room/${_roomId}`);
+              const response = res.data;
+              const _roomId = response.room.id;
+              const room = response.room;
+              navigate(`/room/${_roomId}`, { state: room });
             })
             .catch((e) => {
               alert(e);
@@ -167,33 +173,43 @@ export default function Room() {
   };
 
   const handleClick = async (e, room) => {
-    await Swal.fire({
-      title: "Are you sure to join this room?",
-      confirmButtonColor: "#3b82f6",
-      showCancelButton: true,
-      confirmButtonText: "Yes, I am sure!",
-      cancelButtonText: "No, cancel it!",
-      closeOnConfirm: true,
-      closeOnCancel: true,
-    })
-      .then(function () {
-        _axios
-          .get(`/room/join/${room.roomCode}`, {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          })
-          .then((res) => {
-            const _roomId = res.data.roomId;
-            navigate(`/room/${_roomId}`, { state: room });
-          })
-          .catch((e) => {
-            alert(e);
-          });
+    if (cookies.userId.id !== room.hostUserId) {
+      await Swal.fire({
+        title: "Are you sure to join this room?",
+        confirmButtonColor: "#3b82f6",
+        showCancelButton: true,
+        confirmButtonText: "Yes, I am sure!",
+        cancelButtonText: "No, cancel it!",
+        closeOnConfirm: true,
+        closeOnCancel: true,
       })
-      .catch(function () {
-        e.preventDefault();
-      });
+        .then((result) => {
+          if (result.dismiss !== "cancel") {
+            _axios
+              .get(`/room/join/${room.roomCode}`, {
+                headers: {
+                  Authorization: `Bearer ${authToken}`,
+                },
+              })
+              .then((res) => {
+                const response = res.data;
+                const _roomId = response.room.id;
+                const room = response.room;
+                navigate(`/room/${_roomId}`, { state: room });
+              })
+              .catch((e) => {
+                alert(e);
+              });
+          } else {
+            console.log("cancel");
+          }
+        })
+        .catch(function () {
+          e.preventDefault();
+        });
+    } else {
+      navigate(`/room/${room.id}`, { state: room });
+    }
   };
 
   return (
