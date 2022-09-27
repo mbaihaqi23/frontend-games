@@ -36,7 +36,7 @@ const Navbar = () => {
           </button>
         </div>
         {/* Show profile button when user have logged in */}
-        {cookies.accessToken !== "undefined" ? (
+        {cookies.accessToken && cookies.accessToken !== "undefined" ? (
           <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
             <div className="text-md lg:flex-grow flex items-center">
             <Link

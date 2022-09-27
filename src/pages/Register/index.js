@@ -37,7 +37,7 @@ const Registration = () => {
       });
   };
   return (
-    <div className="min-h-screen bg-gray-300">
+    <div className="min-h-screen bg-gray-100">
       <div className="flex h-screen justify-center items-center">
         <div className="w-80 rounded-lg overflow-hidden shadow-2xl m-4 bg-gray-100">
           <div className="px-6 py-4">

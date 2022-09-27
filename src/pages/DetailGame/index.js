@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 const DetailGame = () => { 
   return (
     <div>
-      <div className="min-h-screen bg-gray-300">
+      <div className="min-h-screen bg-gray-100">
         <div className="flex h-screen flex-row justify-center items-center">
           <div className="w-64 w-max-sm rounded-lg overflow-hidden shadow-2xl bg-gray-100">
             <div className="px-6 py-4">

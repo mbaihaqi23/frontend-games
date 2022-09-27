@@ -38,8 +38,11 @@ export default function Finished({ room, onClick }) {
         {isDraw ? (
           <div
             onClick={onClick}
-            className="bg-slate-500 hover:bg-slate-400 px-8 pt-6 pb-8 rounded-lg cursor-pointer"
+            className="bg-slate-500 hover:bg-slate-400 px-8 pt-4 pb-8 rounded-lg cursor-pointer"
           >
+            <div className="flex justify-between w-56 items-center">
+              {room.roomCode}
+            </div>
             <div className="flex justify-between w-56 items-center">
               <p className="font-semibold text-lg">{room.roomName}</p>
               <p className="text-slate-900 text-sm">Draw</p>
@@ -54,8 +57,11 @@ export default function Finished({ room, onClick }) {
               isWin ? (
                 <div
                   onClick={onClick}
-                  className="bg-blue-900 hover:bg-blue-800 px-8 pt-6 pb-8 rounded-lg cursor-pointer"
+                  className="bg-blue-900 hover:bg-blue-800 px-8 pt-4 pb-8 rounded-lg cursor-pointer"
                 >
+                  <div className="flex justify-between w-56 items-center text-white">
+                    {room.roomCode}
+                  </div>
                   <div className="flex justify-between w-56 items-center">
                     <p className="font-bold text-white text-lg">
                       {room.roomName}
