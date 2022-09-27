@@ -88,7 +88,7 @@ const PlayGame = () => {
     };
 
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gray-100">
         <h1 className="text-4xl text-center font-bold mt-10 mb-28">
           Rock Paper Scissor
         </h1>
