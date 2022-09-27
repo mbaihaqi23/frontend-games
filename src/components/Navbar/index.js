@@ -39,11 +39,14 @@ const Navbar = () => {
         {cookies.accessToken !== "undefined" ? (
           <div className="hidden lg:flex lg:items-center lg:w-auto divide-y-2 sm:divide-y-0">
             <div className="text-md lg:flex-grow flex items-center">
+            <Link
+            to="/profile">
               <img
                 src="/person-icon.png"
                 alt="profile icon"
                 className="h-8 w-8 block lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
               />
+              </Link>
               <Link
                 className="block mt-4 lg:inline-block lg:mt-0 text-gray-800 hover:text-gray-800 mr-4"
                 to="/login"
